@@ -12,9 +12,23 @@ def generalStats():
     teams_list = ["arsenal","aston villa","bournemouth","brentford","brighton","chelsea","crystal palace",
                   "everton","fulham","leeds united","leicester city","liverpool","manchester city","manchester utd",
                   "newcastle utd","nott'ham forest","southampton","tottenham","west ham","wolves"]
+    nameKeys = {"forest":"nott'ham forest", "nottingham forest":"nott'ham forest", "spurs":"tottenham", "tottenham hotspur":
+                "tottenham", "leicester":"leicester city", "newcastle":"newcastle utd", "newcastle united":"newcastle utd",
+                "leeds":"leeds united", "leeds utd":"leeds united", "manchester united":"manchester utd", "city":
+                    "manchester city"}
+    # adding a dictionary to ensure alternate names are picked up in input ^^
 
     team_one = input("Please enter the first team you would like to compare: ").lower() # letting the user enter the teams to compare
     team_two = input("PLease enter the second team you would like to compare: ").lower()
+
+    if team_one in nameKeys.keys():     # converting the input team names into the fbref version if they are an alternate name
+        team_one = nameKeys[team_one]
+    if team_two in nameKeys.keys():
+        team_two = nameKeys[team_two]
+
+    userTeamList = sorted([team_one, team_two])
+
+    print(userTeamList)
 
     teams = {k: dict.fromkeys(desired_stats,0) for k in teams_list}
     teams_2 = {k: dict.fromkeys(extra_stats,0) for k in teams_list}
@@ -34,8 +48,8 @@ def generalStats():
 
 
     for team in teams:
-        teams[team.lower()]["progressive_pass_pct"] = (teams_2[team.lower()]["progressive_passes"] / teams_2[team.lower()]["passes_completed"])*1000
-        teams[team.lower()]["final_third_pass_pct"] = (teams_2[team.lower()]["progressive_passes"] / teams_2[team.lower()]["passes_completed"])*1000
+        teams[team.lower()]["progressive_pass_pct"] = (teams_2[team.lower()]["progressive_passes"] / teams_2[team.lower()]["passes_completed"])*500
+        teams[team.lower()]["final_third_pass_pct"] = (teams_2[team.lower()]["progressive_passes"] / teams_2[team.lower()]["passes_completed"])*500
 
         if not os.path.exists(f'C:/Users/kbruv/PycharmProjects/scraper/teams/{team.title()}'):
             os.mkdir(f'C:/Users/kbruv/PycharmProjects/scraper/teams/{team.title()}')
@@ -72,8 +86,8 @@ def generalStats():
 
     radar.update_layout(showlegend=True)
     radar.show()
-    radar.write_image(f'teams/{team_one.title()}/{team_one} vs {team_two}.jpg', engine='kaleido')
-    radar.write_image(f'teams/{team_two.title()}/{team_one} vs {team_two}.jpg', engine='kaleido')
+    radar.write_image(f'teams/{team_one.title()}/{userTeamList[0]} vs {userTeamList[1]}.jpg', engine='kaleido')
+    radar.write_image(f'teams/{team_two.title()}/{userTeamList[0]} vs {userTeamList[1]}.jpg', engine='kaleido')
 
 
 if __name__ == "__main__":
