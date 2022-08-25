@@ -70,6 +70,7 @@ def generalStats():
         showlegend=False
     )
 
+    radar.update_layout(showlegend=True)
     radar.show()
     radar.write_image(f'teams/{team_one.title()}/{team_one} vs {team_two}.jpg', engine='kaleido')
     radar.write_image(f'teams/{team_two.title()}/{team_one} vs {team_two}.jpg', engine='kaleido')
