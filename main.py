@@ -90,13 +90,10 @@ def generalstats():
     )
 
     radar.update_layout(showlegend=True)
-    radar.show()
 
     # writing the graph to a jpg and html file in each team's individual folder
     radar.write_image(f'teams/{team_one.title()}/{user_team_list[0]} vs {user_team_list[1]}.jpg', engine='kaleido')
-    radar.write_image(f'teams/{team_one.title()}/{user_team_list[0]} vs {user_team_list[1]}.html')
     radar.write_image(f'teams/{team_two.title()}/{user_team_list[0]} vs {user_team_list[1]}.jpg', engine='kaleido')
-    radar.write_image(f'teams/{team_two.title()}/{user_team_list[0]} vs {user_team_list[1]}.html')
 
 
 if __name__ == "__main__":
